@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Chat app using Socket IO and Node JS</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+	<h1 class="font-bold text-indigo-600 text-3xl text-center mt-5">
+		Chat App using Socket io
+	</h1>
+
+	<div id="loginSection" class="flex flex-col justify-center items-center mt-5">
+		<input class="border border-gray-400 rounded-md mt-5 p-1" type="text" placeholder="Username" id="username">
+		<button class="bg-indigo-600 rounded-md p-3 text-white mt-5" onclick="login()">Login</button>
+	</div>
+
+	<div id="chatSection" style="display: none;">
+		<form class="flex flex-col justify-center items-center mt-5" id="form">
+			<input class="border border-gray-400 rounded-md mt-5 p-1" type="text" placeholder="Message" id="message">
+			<button class="bg-blue-500 rounded-md p-2 text-white mt-5">Send</button>
+		</form>
+		<div class="flex flex-col justify-center items-center mt-5" id="messageArea"></div>
+	</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		let socket = io();
+
+		let form = document.getElementById('form');
+		let message = document.getElementById('message');
+		let messageArea = document.getElementById('messageArea');
+		let loginSection = document.getElementById('loginSection');
+		let chatSection = document.getElementById('chatSection');
+
+		function login() {
+      let usernameInput = document.getElementById('username');
+      let username = usernameInput.value.trim();
+
+      if (username) {
+        console.log(username);
+        socket.emit('login', username, (success) => {
+          if (success) {
+            socket.username = username; // Store the username on the socket object
+            loginSection.style.display = 'none';
+            chatSection.style.display = 'block';
+          } else {
+            // Handle login error, e.g., display an error message
+          }
+        });
+      }
+    }
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			if (message.value) {
+				socket.emit('send name', socket.username); // Use socket.username instead of myname.value
+				socket.emit('send message', message.value);
+				message.value = '';
+			}
+		});
+
+		socket.on('login', (success) => {
+			if (success) {
+				loginSection.style.display = 'none';
+				chatSection.style.display = 'block';
+			} else {
+				// Handle login error, e.g., display an error message
+			}
+		});
+
+		socket.on('send name', (username) => {
+			// Only append messages once the user has successfully logged in
+			if (chatSection.style.display === 'block') {
+				let name = document.createElement('p');
+				name.style.backgroundColor = 'grey';
+				name.style.width = '100%';
+				name.style.textAlign = 'center';
+				name.style.color = 'white';
+				name.textContent = username + ':';
+				messageArea.appendChild(name);
+			}
+		});
+
+		socket.on('send message', (chat) => {
+			let chatContent = document.createElement('p');
+			chatContent.textContent = chat;
+			messageArea.appendChild(chatContent);
+		});
+	</script>
+</body>
+
+</html>
