@@ -1,5 +1,8 @@
 input:focus {
-    border: none;
+    border-color: #4F45E4;
+}
+input:focus-visible {
+    outline: none;
 }
 #chatSection {
     height: 100vh;
