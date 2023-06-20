@@ -1,0 +1,10 @@
+input:focus {
+    border: none;
+}
+#chatSection {
+    height: 100vh;
+}
+#messageArea {
+    height: 100%;
+    overflow: scroll;
+}
