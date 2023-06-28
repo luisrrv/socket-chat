@@ -11,3 +11,6 @@ input:focus-visible {
     height: 100%;
     overflow: scroll;
 }
+.fi-sr-angle-square-down {
+    height: 20px;
+}
