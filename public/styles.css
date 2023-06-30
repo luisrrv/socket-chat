@@ -14,3 +14,9 @@ input:focus-visible {
 .fi-sr-angle-square-down {
     height: 20px;
 }
+.scroll-btn {
+    transform: translateX(-50%);
+}
+.scroll-btn:hover {
+    cursor: pointer;
+}
