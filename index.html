@@ -27,7 +27,7 @@
       <div class="text-indigo-200" id="usernameTop">juas</div>
     </div>
     <div class="flex flex-col items-start mb-14 w-full p-6 scroll-smooth" id="messageArea">
-      <div class="scroll-btn text-sm flex flex-row items-center justify-center gap-2 text-gray-400 p-3 bg-zinc-900 absolute bottom-14 left-1/2 w-full hidden"><span class="line bg-gray-400"></span>New message(s)<span class="line bg-gray-400"></span><span class="arrow-down bg-indigo-600 rounded-full"><i class="fi fi-tr-chevron-double-down"></i></span></div>
+      <div class="scroll-btn text-sm flex flex-row items-center justify-center gap-2 text-gray-400 p-3 absolute bottom-14 left-1/2 w-full hidden"><span class="line bg-gray-400"></span>New message(s)<span class="line bg-gray-400"></span><span class="arrow-down bg-indigo-600 rounded-full"><i class="fi fi-tr-chevron-double-down"></i></span></div>
     </div>
 		<form class="flex flex-col justify-center items-center mt-12 fixed bottom-0 right-0 w-full" id="form">
 			<input class="bg-zinc-800 text-indigo-200 border border-gray-700 rounded-md p-2 w-9/12 absolute right-14 bottom-0 m-2 placeholder:text-gray-600" type="text" placeholder="Message" id="message">
@@ -116,19 +116,20 @@
 
 			let chatContent = document.createElement('p');
 			chatContent.textContent = chat;
+      messageArea.appendChild(chatContent);
       
       if (uname === socket.username) {
-        chatContent.className = 'message text-white bg-indigo-600 rounded-xl px-3 py-2 mb-1 self-end';
-        console.log(messageArea.scrollHeight);
-        messageArea.scrollTop = messageArea.scrollHeight;
-        console.log(messageArea.scrollTop);
+        chatContent.className = 'message break-words text-white bg-indigo-600 rounded-xl px-3 py-2 mb-1 self-end';
+        messageArea.scrollTop = messageArea.scrollHeight + 160;
       } else {
-        chatContent.className = 'message text-white bg-gray-600 rounded-xl px-3 py-2 mb-1';
+        chatContent.className = 'message break-words text-white bg-gray-600 rounded-xl px-3 py-2 mb-1';
 
-        const isAtBottom = messageArea.scrollTop + messageArea.clientHeight >= messageArea.scrollHeight;
+        const isAtBottom = messageArea.scrollTop + messageArea.clientHeight >= messageArea.scrollHeight - 64;
+        if(isAtBottom) {
+          messageArea.scrollTop = messageArea.scrollHeight + 160;
+        }
         if(!isAtBottom) scrollBtn.classList.remove('hidden');
       }
-			messageArea.appendChild(chatContent);
 		});
 
 	</script>
