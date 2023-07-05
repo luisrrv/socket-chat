@@ -39,6 +39,7 @@
 	<script>
 		let socket = io();
 
+    let loginIpt = document.querySelector('input#username');
 		let form = document.getElementById('form');
 		let message = document.getElementById('message');
 		let messageArea = document.getElementById('messageArea');
@@ -76,6 +77,10 @@
         });
       }
     }
+
+    loginIpt && loginIpt.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') login();
+    });
 
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
