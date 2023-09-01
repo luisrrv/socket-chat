@@ -1,5 +1,5 @@
-# "A simple chat app, built using Express.js, Socket.io, and Tailwind CSS.
-## Requires users to log in with a username in order to access the chat."
+# A simple chat app, built using Express.js, Socket.io, and Tailwind CSS.
+## Requires users to log in with a username in order to access the chat.
 
 ### Run ```node index.js``` in your terminal to see it in localHost 3000
 
